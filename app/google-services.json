@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "137319323521",
+    "project_id": "woocertask",
+    "storage_bucket": "woocertask.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:137319323521:android:df9f8f00585f46e1ce7a80",
+        "android_client_info": {
+          "package_name": "com.rezapour.woocertask"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "137319323521-2kltkas1sk412b7416rfvc6t27pk5ll1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrTlnFC_S-qEt7XP8dy-c_EuvrGKP3Amg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "137319323521-2kltkas1sk412b7416rfvc6t27pk5ll1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
