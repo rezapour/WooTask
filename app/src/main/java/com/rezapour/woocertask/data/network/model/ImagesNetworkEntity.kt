@@ -1,6 +1,6 @@
 package com.rezapour.woocertask.data.network.model
 import com.google.gson.annotations.SerializedName
-data class Images (
+data class ImagesNetworkEntity (
 
 	@SerializedName("id") val id : Int,
 	@SerializedName("date_created") val date_created : String,

@@ -1,6 +1,6 @@
 package com.rezapour.woocertask.data.network.model
 import com.google.gson.annotations.SerializedName
-data class Img (
+data class ImgNetworkEntity (
 
 	@SerializedName("alt_text") val alt_text : String,
 	@SerializedName("src") val src : String,
