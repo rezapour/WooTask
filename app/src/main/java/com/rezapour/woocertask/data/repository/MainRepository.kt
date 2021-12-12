@@ -6,7 +6,5 @@ import java.util.concurrent.Flow
 
 interface MainRepository {
 
-    fun getProducts()= flow<Int>{
-
-    }
+    suspend fun getProducts()
 }
