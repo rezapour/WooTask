@@ -10,9 +10,9 @@ import com.rezapour.woocertask.data.database.entities.ProductCacheEntity
 interface ProductDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFood(food: ProductCacheEntity): Long
+    suspend fun insertProduct(product: ProductCacheEntity): Long
 
     @Query("Select * From table_products")
-    suspend fun getFoods(): List<ProductCacheEntity>
+    suspend fun getProducts(): List<ProductCacheEntity>
 
 }

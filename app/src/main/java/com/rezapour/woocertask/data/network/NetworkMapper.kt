@@ -54,4 +54,9 @@ class NetworkMapper @Inject constructor() {
         }
     }
 
+    fun mapFromListEntity(entitys: List<ProductNetworkEntity>): List<Product> {
+        return entitys.map { mapFromEntity(it) }
+    }
+
+
 }
