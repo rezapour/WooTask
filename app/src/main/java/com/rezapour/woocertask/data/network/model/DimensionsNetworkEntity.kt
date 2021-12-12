@@ -1,9 +1,11 @@
 package com.rezapour.woocertask.data.network.model
 
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+
 data class DimensionsNetworkEntity (
 
-	@SerializedName("length") val length : String,
-	@SerializedName("width") val width : String,
-	@SerializedName("height") val height : String
+	@Expose @SerializedName("length") val length : String,
+	@Expose @SerializedName("width") val width : String,
+	@Expose @SerializedName("height") val height : String
 )

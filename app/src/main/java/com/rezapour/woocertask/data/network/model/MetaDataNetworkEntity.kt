@@ -1,8 +1,11 @@
 package com.rezapour.woocertask.data.network.model
-import com.google.gson.annotations.SerializedName
-data class MetaDataNetworkEntity (
 
-	@SerializedName("id") val id : Int,
-	@SerializedName("key") val key : String,
-	@SerializedName("value") val value : List<String>
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+
+data class MetaDataNetworkEntity(
+
+    @Expose @SerializedName("id") val id: Int,
+    @Expose @SerializedName("key") val key: String,
+
 )

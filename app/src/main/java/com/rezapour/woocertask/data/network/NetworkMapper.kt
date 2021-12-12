@@ -39,7 +39,7 @@ class NetworkMapper @Inject constructor() {
             ratingCount = entity.ratingCount,
 //            categories = MapFromCategoriesEntity(entity.categories),
             stockStatus = entity.stockStatus,
-            imagesUrl = entity.images.get(0).src
+            imagesUrl = entity.images.first().src
 
         )
     }
