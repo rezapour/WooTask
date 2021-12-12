@@ -25,7 +25,7 @@ class MainRepositoryImpl constructor(
             when (response.code()) {
                 200 -> {
                     val body = response.body()
-                    if (body != null) {
+                    if (body != null && body.isNotEmpty()) {
                         val products = networkMapper.mapFromListEntity(body)
                         for (product in products) {
                             dao.insertProduct(cacheMapper.mapToEntity(product))
@@ -34,16 +34,28 @@ class MainRepositoryImpl constructor(
                         emit(DataState.Success(cacheMapper.mapFromListEntity(cacheProduct)))
                     } else {
 
+                        val cacheProduct = dao.getProducts()
+                        if (cacheProduct.isNotEmpty())
+                            emit(DataState.Success(cacheMapper.mapFromListEntity(cacheProduct)))
+                        else
+                            emit(DataState.Error("null"))
                     }
                 }
                 else -> {
-                    Log.d("RepositoryLog","erro code${response.code()} ")
+                    val cacheProduct = dao.getProducts()
+                    if (cacheProduct.isNotEmpty())
+                        emit(DataState.Success(cacheMapper.mapFromListEntity(cacheProduct)))
+                    else
+                        emit(DataState.Error("null1"))
                 }
             }
+        } catch (e: Exception) {
+            val cacheProduct = dao.getProducts()
+            if (cacheProduct.isNotEmpty())
+                emit(DataState.Success(cacheMapper.mapFromListEntity(cacheProduct)))
+            else
+                emit(DataState.Error("null2"))
 
-
-        } catch (e:Exception){
-            Log.d("RepositoryLog","erro message${e.message} ")
         }
 
     }

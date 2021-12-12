@@ -6,6 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
+
     @GET("wp-json/wc/v3/products")
     suspend fun getProducts(
         @Query("consumer_key") consumerKey: String,
