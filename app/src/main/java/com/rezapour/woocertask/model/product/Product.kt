@@ -27,7 +27,7 @@ data class Product (
 	val reviewsAllowed : Boolean,
 	val averageRating : Double,
 	val ratingCount : Int,
-	val categories : List<Categories>,
+//	val categories : List<Categories>,
 	val imagesUrl : String,
 	val stockStatus : String
 )

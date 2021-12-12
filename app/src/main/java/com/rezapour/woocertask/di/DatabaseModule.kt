@@ -28,7 +28,7 @@ object DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideFoodDao(appDataBase: AppDataBase): ProductDao {
+    fun provideProductDao(appDataBase: AppDataBase): ProductDao {
         return appDataBase.productDao()
     }
 }

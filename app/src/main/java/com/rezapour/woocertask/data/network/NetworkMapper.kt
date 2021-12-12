@@ -6,9 +6,10 @@ import com.rezapour.woocertask.data.network.model.LinksNetworkEntity
 import com.rezapour.woocertask.data.network.model.ProductNetworkEntity
 import com.rezapour.woocertask.model.product.*
 import com.rezapour.woocertask.util.EntityMapper
+import javax.inject.Inject
 
-class NetworkMapper : EntityMapper<ProductNetworkEntity, Product> {
-    override fun mapFromEntity(entity: ProductNetworkEntity): Product {
+class NetworkMapper @Inject constructor() {
+    fun mapFromEntity(entity: ProductNetworkEntity): Product {
         return Product(
             id = entity.id,
             name = entity.name,
@@ -27,19 +28,16 @@ class NetworkMapper : EntityMapper<ProductNetworkEntity, Product> {
             onSale = entity.onSale,
             purchasable = entity.purchasable,
             totalSales = entity.totalSales,
-            virtual = entity.virtual,
-            downloadable = entity.downloadable,
             taxStatus = entity.taxStatus,
             stockQuantity = entity.stockQuantity,
             backorders = entity.backorders,
             backordersAllowed = entity.backordersAllowed,
-            backordered = entity.backordered,
             soldIndividually = entity.soldIndividually,
             shippingRequired = entity.shippingRequired,
             reviewsAllowed = entity.reviewsAllowed,
             averageRating = entity.averageRating,
             ratingCount = entity.ratingCount,
-            categories = MapFromCategoriesEntity(entity.categories),
+//            categories = MapFromCategoriesEntity(entity.categories),
             stockStatus = entity.stockStatus,
             imagesUrl = entity.images.get(0).src
 
@@ -55,4 +53,5 @@ class NetworkMapper : EntityMapper<ProductNetworkEntity, Product> {
             )
         }
     }
+
 }
