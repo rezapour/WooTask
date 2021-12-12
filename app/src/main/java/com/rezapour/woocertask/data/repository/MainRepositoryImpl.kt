@@ -33,12 +33,11 @@ class MainRepositoryImpl constructor(
                         val cacheProduct = dao.getProducts()
                         emit(DataState.Success(cacheMapper.mapFromListEntity(cacheProduct)))
                     } else {
-
                         val cacheProduct = dao.getProducts()
                         if (cacheProduct.isNotEmpty())
                             emit(DataState.Success(cacheMapper.mapFromListEntity(cacheProduct)))
                         else
-                            emit(DataState.Error("null"))
+                            emit(DataState.Error("There are no product to show please check your internet connection"))
                     }
                 }
                 else -> {
@@ -46,15 +45,15 @@ class MainRepositoryImpl constructor(
                     if (cacheProduct.isNotEmpty())
                         emit(DataState.Success(cacheMapper.mapFromListEntity(cacheProduct)))
                     else
-                        emit(DataState.Error("null1"))
+                        emit(DataState.Error("There are no product to show please check your internet connection"))
                 }
             }
         } catch (e: Exception) {
             val cacheProduct = dao.getProducts()
-            if (cacheProduct.isNotEmpty())
+            if (cacheProduct.isNotEmpty()) {
                 emit(DataState.Success(cacheMapper.mapFromListEntity(cacheProduct)))
-            else
-                emit(DataState.Error("null2"))
+            } else
+                emit(DataState.Error("There are no product to show please check your internet connection"))
 
         }
 
