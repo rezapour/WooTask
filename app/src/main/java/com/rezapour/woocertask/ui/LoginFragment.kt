@@ -8,18 +8,29 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.rezapour.woocertask.R
 import com.rezapour.woocertask.asset.MyApplication
 import com.rezapour.woocertask.databinding.FragmentLoginBinding
+import com.rezapour.woocertask.viewmodel.LoginViewmodel
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+
+    private var navControler: NavController? = null
+
+    private val viewmodel: LoginViewmodel by viewModels()
+
     private lateinit var btnSingUp: Button
     private lateinit var etName: TextView
     private lateinit var etEmail: TextView
@@ -44,6 +55,7 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        navControler = Navigation.findNavController(view)
         setupUi()
     }
 
@@ -56,12 +68,10 @@ class LoginFragment : Fragment() {
         etConsumerSecret = binding.etConsumerSecret
 
         btnSingUp.setOnClickListener({
-
+            navControler!!.navigate(R.id.action_loginFragment_to_mainFragment)
         })
 
     }
-
-
 
 
 }
