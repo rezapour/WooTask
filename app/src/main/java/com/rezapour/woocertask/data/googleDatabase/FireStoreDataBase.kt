@@ -20,35 +20,16 @@ class FireStoreDataBase @Inject constructor(private val db: FirebaseFirestore) {
 
     suspend fun saveUser(user: User) = callbackFlow<String> {
 
-        Log.d("mainFragemtnTest", "Start")
+
         db.collection("users").document("user")
             .set(user)
             .addOnSuccessListener { documentReference ->
                 trySend("done")
-                Log.d("mainFragemtnTest", "DocumentSnapshot added with ID:")
             }
             .addOnFailureListener { e ->
                 trySend("error")
-                Log.w("mainFragemtnTest", "Error adding document", e)
             }
         awaitClose { cancel() }
     }
-
-
-    suspend fun getUser()= callbackFlow<User> {
-        val db = Firebase.firestore
-        db.collection("users").document("user")
-            .get()
-            .addOnSuccessListener { result ->
-                if (result.data!=null){
-                }
-                Log.d("mainFragemtnTest", "${result.data}")
-            }
-            .addOnFailureListener { exception ->
-                Log.w("mainFragemtnTest", "Error getting documents.", exception)
-            }
-        awaitClose { cancel() }
-    }
-
 
 }

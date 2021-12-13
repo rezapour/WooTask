@@ -81,9 +81,7 @@ class MainRepositoryImpl constructor(
     }
 
     override suspend fun saveUser(user: User): Flow<DataState<User>> = callbackFlow {
-        Log.d("mainFragemtnTest", "repository")
         fireStore.saveUser(user).collect {
-            Log.d("mainFragemtnTest", "repository=$it")
             if (it.equals("done")) {
                 dao.insertUser(cacheMapper.mapToEntity(user))
                 trySend(DataState.Success(user))
