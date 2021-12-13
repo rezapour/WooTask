@@ -7,9 +7,10 @@ import javax.inject.Inject
 
 class ApiProviderimpl @Inject constructor(private val apiService: ApiService) : ApiProvider {
     override suspend fun getProducts(
+        url:String,
         consumerKey: String,
         consumerSecret: String
     ): Response<List<ProductNetworkEntity>> {
-        return apiService.getProducts(consumerKey, consumerSecret)
+        return apiService.getProducts(url,consumerKey, consumerSecret)
     }
 }

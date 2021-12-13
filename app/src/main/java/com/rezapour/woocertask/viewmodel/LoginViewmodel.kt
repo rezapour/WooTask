@@ -13,6 +13,8 @@ import com.rezapour.woocertask.util.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.withTimeoutOrNull
 import javax.inject.Inject
 
 
@@ -53,8 +55,13 @@ class LoginViewmodel @Inject constructor(
             return
         }
         viewModelScope.launch {
-            repository.saveUser(user).collect {
-                _dataState.postValue(it)
+            val job = withTimeoutOrNull(5000) {
+                repository.saveUser(user).collect {
+                    _dataState.postValue(it)
+                }
+            }
+            if (job == null) {
+                _dataState.postValue(DataState.Error("Check your internet connection"))
             }
         }
     }

@@ -5,6 +5,7 @@ import retrofit2.Response
 
 interface ApiProvider {
     suspend fun getProducts(
+        url:String,
         consumerKey: String,
         consumerSecret: String
     ): Response<List<ProductNetworkEntity>>

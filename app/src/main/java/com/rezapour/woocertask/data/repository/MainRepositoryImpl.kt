@@ -33,7 +33,9 @@ class MainRepositoryImpl constructor(
     override suspend fun getProducts(): Flow<DataState<List<Product>>> = flow {
         emit(DataState.Loading)
         try {
-            val response = apiProvider.getProducts(Constants.Ck, Constants.CS)
+            val user = dao.getUser()
+            val url = user.webSite + Constants.SUB_DOMAIN
+            val response = apiProvider.getProducts(url,user.consumerKey, user.consumerSecret)
             when (response.code()) {
                 200 -> {
                     val body = response.body()

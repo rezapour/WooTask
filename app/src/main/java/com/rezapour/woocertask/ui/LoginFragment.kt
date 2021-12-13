@@ -99,20 +99,12 @@ class LoginFragment : Fragment() {
     private fun saveUser() {
         viewmodel.saveUser(
             User(
-                name = "reza",
-                email = "reza@gamil.com",
-                webSite = "reza.com",
-                consumerKey = "ck_12345",
-                consumerSecret = "cs_1234"
+                name = etName.text.toString(),
+                email = etEmail.text.toString(),
+                webSite = etWebsite.text.toString(),
+                consumerSecret = etConsumerSecret.text.toString(),
+                consumerKey = etConsumerKey.text.toString()
             )
-
-//            User(
-//                name = etName.text.toString(),
-//                email = etEmail.text.toString(),
-//                webSite = etWebsite.text.toString(),
-//                consumerSecret = etConsumerSecret.text.toString(),
-//                consumerKey = etConsumerKey.text.toString()
-//            )
         )
     }
 
