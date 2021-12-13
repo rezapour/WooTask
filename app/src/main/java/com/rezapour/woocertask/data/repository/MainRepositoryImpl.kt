@@ -7,6 +7,7 @@ import com.google.firebase.ktx.Firebase
 import com.rezapour.woocertask.asset.Constants
 import com.rezapour.woocertask.data.database.CacheMapper
 import com.rezapour.woocertask.data.database.dao.ProductDao
+import com.rezapour.woocertask.data.database.entities.UserCacheEntity
 import com.rezapour.woocertask.data.googleDatabase.FireStoreDataBase
 import com.rezapour.woocertask.data.network.ApiProvider
 import com.rezapour.woocertask.data.network.NetworkMapper
@@ -81,14 +82,19 @@ class MainRepositoryImpl constructor(
         Log.d("mainFragemtnTest", "repository")
         fireStore.saveUser(user).collect {
             Log.d("mainFragemtnTest", "repository=$it")
-            if(it.equals("done")){
+            if (it.equals("done")) {
+                dao.insertUser(cacheMapper.mapToEntity(user))
                 trySend(DataState.Success(user))
-            }else{
+            } else {
                 trySend(DataState.Error("Something happened, login is not completed"))
             }
 
         }
         awaitClose { cancel() }
+    }
+
+    override fun getUser() = flow<UserCacheEntity> {
+        emit(dao.getUser())
     }
 
 }

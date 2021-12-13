@@ -1,12 +1,14 @@
 package com.rezapour.woocertask.data.database
 
 import com.rezapour.woocertask.data.database.entities.ProductCacheEntity
+import com.rezapour.woocertask.data.database.entities.UserCacheEntity
 import com.rezapour.woocertask.model.product.Product
+import com.rezapour.woocertask.model.user.User
 import com.rezapour.woocertask.util.EntityMapper
 import javax.inject.Inject
 
-class CacheMapper @Inject constructor() : EntityMapper<ProductCacheEntity, Product> {
-    override fun mapFromEntity(entity: ProductCacheEntity): Product {
+class CacheMapper @Inject constructor() {
+    fun mapFromEntity(entity: ProductCacheEntity): Product {
         return Product(
             id = entity.id,
             name = entity.name,
@@ -39,7 +41,7 @@ class CacheMapper @Inject constructor() : EntityMapper<ProductCacheEntity, Produ
         )
     }
 
-    override fun mapToEntity(domailModel: Product): ProductCacheEntity {
+    fun mapToEntity(domailModel: Product): ProductCacheEntity {
         return ProductCacheEntity(
             id = domailModel.id,
             name = domailModel.name,
@@ -79,6 +81,28 @@ class CacheMapper @Inject constructor() : EntityMapper<ProductCacheEntity, Produ
 
     fun mapToEntityList(domailModels: List<Product>): List<ProductCacheEntity> {
         return domailModels.map { mapToEntity(it) }
+    }
+
+
+    fun mapToEntity(user: User): UserCacheEntity {
+        return UserCacheEntity(
+            id = 1,
+            name = user.name,
+            email = user.email,
+            webSite = user.webSite,
+            consumerKey = user.consumerKey,
+            consumerSecret = user.consumerSecret
+        )
+    }
+
+    fun mapfromEntity(cache: UserCacheEntity): User {
+        return User(
+            name = cache.name,
+            email = cache.email,
+            webSite = cache.webSite,
+            consumerKey = cache.consumerKey,
+            consumerSecret = cache.consumerSecret
+        )
     }
 
 }

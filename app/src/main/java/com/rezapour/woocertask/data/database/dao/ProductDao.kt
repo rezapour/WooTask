@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.rezapour.woocertask.data.database.entities.ProductCacheEntity
+import com.rezapour.woocertask.data.database.entities.UserCacheEntity
 
 @Dao
 interface ProductDao {
@@ -14,5 +15,12 @@ interface ProductDao {
 
     @Query("Select * From table_products")
     suspend fun getProducts(): List<ProductCacheEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertUser(user: UserCacheEntity): Long
+
+    @Query("Select * From table_user where id=1")
+    suspend fun getUser(): UserCacheEntity
+
 
 }
