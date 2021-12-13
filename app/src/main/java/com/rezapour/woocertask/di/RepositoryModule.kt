@@ -2,6 +2,7 @@ package com.rezapour.woocertask.di
 
 import com.rezapour.woocertask.data.database.CacheMapper
 import com.rezapour.woocertask.data.database.dao.ProductDao
+import com.rezapour.woocertask.data.googleDatabase.FireStoreDataBase
 import com.rezapour.woocertask.data.network.ApiProvider
 import com.rezapour.woocertask.data.network.ApiProviderimpl
 import com.rezapour.woocertask.data.network.NetworkMapper
@@ -33,9 +34,10 @@ object RepositoryModule {
         apiProvider: ApiProvider,
         dao: ProductDao,
         networkMapper: NetworkMapper,
-        cacheMapper: CacheMapper
+        cacheMapper: CacheMapper,
+        fireStoreDataBase: FireStoreDataBase
     ): MainRepository {
-        return MainRepositoryImpl(apiProvider,dao,networkMapper,cacheMapper)
+        return MainRepositoryImpl(apiProvider,dao,networkMapper,cacheMapper,fireStoreDataBase)
     }
 
 

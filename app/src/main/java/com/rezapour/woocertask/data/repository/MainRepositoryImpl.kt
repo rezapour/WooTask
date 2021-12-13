@@ -1,22 +1,33 @@
 package com.rezapour.woocertask.data.repository
 
+import android.content.Context
 import android.util.Log
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.rezapour.woocertask.asset.Constants
 import com.rezapour.woocertask.data.database.CacheMapper
 import com.rezapour.woocertask.data.database.dao.ProductDao
+import com.rezapour.woocertask.data.googleDatabase.FireStoreDataBase
 import com.rezapour.woocertask.data.network.ApiProvider
 import com.rezapour.woocertask.data.network.NetworkMapper
 import com.rezapour.woocertask.model.product.Product
+import com.rezapour.woocertask.model.user.User
 import com.rezapour.woocertask.util.DataState
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import java.lang.Exception
+
 
 class MainRepositoryImpl constructor(
     private val apiProvider: ApiProvider,
     private val dao: ProductDao,
     private val networkMapper: NetworkMapper,
-    private val cacheMapper: CacheMapper
+    private val cacheMapper: CacheMapper,
+    private val fireStore: FireStoreDataBase
 ) : MainRepository {
     override suspend fun getProducts(): Flow<DataState<List<Product>>> = flow {
         emit(DataState.Loading)
@@ -40,6 +51,13 @@ class MainRepositoryImpl constructor(
                             emit(DataState.Error("There are no product to show please check your internet connection"))
                     }
                 }
+                401 -> {
+                    val cacheProduct = dao.getProducts()
+                    if (cacheProduct.isNotEmpty())
+                        emit(DataState.Success(cacheMapper.mapFromListEntity(cacheProduct)))
+                    else
+                        emit(DataState.Error("the consumer_key or consumer_secret is wrong. "))
+                }
                 else -> {
                     val cacheProduct = dao.getProducts()
                     if (cacheProduct.isNotEmpty())
@@ -59,5 +77,18 @@ class MainRepositoryImpl constructor(
 
     }
 
+    override suspend fun saveUser(user: User): Flow<DataState<User>> = callbackFlow {
+        Log.d("mainFragemtnTest", "repository")
+        fireStore.saveUser(user).collect {
+            Log.d("mainFragemtnTest", "repository=$it")
+            if(it.equals("done")){
+                trySend(DataState.Success(user))
+            }else{
+                trySend(DataState.Error("Something happened, login is not completed"))
+            }
+
+        }
+        awaitClose { cancel() }
+    }
 
 }

@@ -1,18 +1,25 @@
 package com.rezapour.woocertask.viewmodel
 
+import android.util.Log
+import android.util.LogPrinter
 import android.util.Patterns
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.rezapour.woocertask.data.repository.MainRepository
 import com.rezapour.woocertask.model.user.User
 import com.rezapour.woocertask.util.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @HiltViewModel
-class LoginViewmodel @Inject constructor(private val savedStateHandle: SavedStateHandle) :
+class LoginViewmodel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
+    private val repository: MainRepository
+) :
     ViewModel() {
 
     private val _dataState: MutableLiveData<DataState<User>> = MutableLiveData()
@@ -41,8 +48,13 @@ class LoginViewmodel @Inject constructor(private val savedStateHandle: SavedStat
             _dataState.value = DataState.Error("consumerSecret is not correct please check it")
             return
         }
-
-        _dataState.value = DataState.Success(user)
+        Log.d("mainFragemtnTest", "viewmodel1")
+        viewModelScope.launch {
+            Log.d("mainFragemtnTest", "viewmodel")
+            repository.saveUser(user).collect {
+                _dataState.postValue(it)
+            }
+        }
     }
 
     private fun validateName(name: String): Boolean {
