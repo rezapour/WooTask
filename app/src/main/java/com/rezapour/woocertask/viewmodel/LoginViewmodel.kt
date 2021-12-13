@@ -25,6 +25,8 @@ class LoginViewmodel @Inject constructor(
     private val _dataState: MutableLiveData<DataState<User>> = MutableLiveData()
     val dataState: LiveData<DataState<User>> get() = _dataState
 
+    val isLogin = repository.getUser().asLiveData()
+
 
     fun saveUser(user: User) {
         if (!validateName(user.name)) {

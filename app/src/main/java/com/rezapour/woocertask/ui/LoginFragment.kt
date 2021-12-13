@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.rezapour.woocertask.R
 import com.rezapour.woocertask.databinding.FragmentLoginBinding
 import com.rezapour.woocertask.model.user.User
 import com.rezapour.woocertask.util.DataState
@@ -62,7 +63,7 @@ class LoginFragment : Fragment() {
 
             when (dataState) {
                 is DataState.Success -> {
-                    Toast.makeText(context, "save", Toast.LENGTH_LONG).show()
+                    navControler!!.navigate(R.id.action_loginFragment_to_mainFragment)
                 }
                 is DataState.Error -> {
                     Toast.makeText(context, dataState.message, Toast.LENGTH_LONG).show()
@@ -85,9 +86,7 @@ class LoginFragment : Fragment() {
         etConsumerSecret = binding.etConsumerSecret
 
         btnSingUp.setOnClickListener({
-//            navControler!!.navigate(R.id.action_loginFragment_to_mainFragment)
             saveUser()
-
         })
 
     }
