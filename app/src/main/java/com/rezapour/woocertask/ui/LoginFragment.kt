@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -35,6 +36,7 @@ class LoginFragment : Fragment() {
     private lateinit var etWebsite: TextView
     private lateinit var etConsumerKey: TextView
     private lateinit var etConsumerSecret: TextView
+    private lateinit var frameLayout: FrameLayout
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,13 +65,16 @@ class LoginFragment : Fragment() {
 
             when (dataState) {
                 is DataState.Success -> {
+                    showProgressBar(false)
                     navControler!!.navigate(R.id.action_loginFragment_to_mainFragment)
                 }
                 is DataState.Error -> {
+                    showProgressBar(false)
                     Toast.makeText(context, dataState.message, Toast.LENGTH_LONG).show()
+
                 }
                 is DataState.Loading -> {
-
+                    showProgressBar(true)
                 }
 
             }
@@ -84,7 +89,7 @@ class LoginFragment : Fragment() {
         etWebsite = binding.etwebsite
         etConsumerKey = binding.etConsumerKey
         etConsumerSecret = binding.etConsumerSecret
-
+        frameLayout = binding.framLoding
         btnSingUp.setOnClickListener({
             saveUser()
         })
@@ -92,13 +97,14 @@ class LoginFragment : Fragment() {
     }
 
     private fun saveUser() {
-        viewmodel.saveUser(User(
-            name="reza",
-            email = "reza@gamil.com",
-            webSite = "reza.com",
-            consumerKey = "ck_12345",
-            consumerSecret = "cs_1234"
-        )
+        viewmodel.saveUser(
+            User(
+                name = "reza",
+                email = "reza@gamil.com",
+                webSite = "reza.com",
+                consumerKey = "ck_12345",
+                consumerSecret = "cs_1234"
+            )
 
 //            User(
 //                name = etName.text.toString(),
@@ -108,6 +114,18 @@ class LoginFragment : Fragment() {
 //                consumerKey = etConsumerKey.text.toString()
 //            )
         )
+    }
+
+    private fun showProgressBar(isShowing: Boolean) {
+        if (isShowing) {
+            frameLayout.visibility = View.VISIBLE
+            btnSingUp.isEnabled=false
+        }
+
+        else {
+            frameLayout.visibility = View.INVISIBLE
+            btnSingUp.isEnabled=true
+        }
     }
 
 

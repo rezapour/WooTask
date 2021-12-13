@@ -45,11 +45,9 @@ class SplashFragment : Fragment() {
     private fun setObserver() {
         viewmodel.isLogin.observe(viewLifecycleOwner) {
             if (it == null) {
-                Log.d("mainFragemtnTest", "notlogin")
                 nextFragment(R.id.action_splashFragment_to_loginFragment)
 
             } else {
-                Log.d("mainFragemtnTest", "login")
                 nextFragment(R.id.action_splashFragment_to_mainFragment)
             }
         }

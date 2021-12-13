@@ -1,5 +1,6 @@
 package com.rezapour.woocertask.viewmodel
 
+import android.provider.ContactsContract
 import android.util.Log
 import android.util.LogPrinter
 import android.util.Patterns
@@ -29,6 +30,7 @@ class LoginViewmodel @Inject constructor(
 
 
     fun saveUser(user: User) {
+        _dataState.value = DataState.Loading
         if (!validateName(user.name)) {
             _dataState.value = DataState.Error("Name is not correct please check it")
             return
@@ -50,9 +52,7 @@ class LoginViewmodel @Inject constructor(
             _dataState.value = DataState.Error("consumerSecret is not correct please check it")
             return
         }
-        Log.d("mainFragemtnTest", "viewmodel1")
         viewModelScope.launch {
-            Log.d("mainFragemtnTest", "viewmodel")
             repository.saveUser(user).collect {
                 _dataState.postValue(it)
             }
